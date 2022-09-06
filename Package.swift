@@ -14,30 +14,31 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // TODO: Insert loco package
+        .package(
+            url: "https://github.com/konrad1977/loco.git",
+            branch: "main"
+        )
     ],
     targets: [
         .plugin(
             name: "LocoPlugin",
             capability: .command(
-                intent: .sourceCodeFormatting(),
+								intent: .custom(
+										verb: "loco",
+										description: "Will run localization linter `loco`."
+								),
                 permissions: [
                     .writeToPackageDirectory(
-                        reason: "LocoPlugin will format all .lproj inside of directory."
+                        reason: "LocoPlugin will format all *.lproj inside of your directory."
                     )
                 ]
             ),
             dependencies: [
-                .target(name: "Core")
+                .product(
+                    name: "loco",
+                    package: "Loco"
+                ),
             ]
-        ),
-        .target(
-            name: "Core",
-            dependencies: []
-        ),
-        .testTarget(
-            name: "LocoPluginTest",
-            dependencies: ["LocoPlugin"]
         ),
     ]
 )
