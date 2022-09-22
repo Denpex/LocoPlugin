@@ -11,6 +11,10 @@ let package = Package(
 		.watchOS("6.0")
 	],
 	products: [
+		.library(
+			name: "LocoLib",
+			targets: ["LocoLib"]
+		),
 		.plugin(
 			name: "LocoBuild",
 			targets: ["LocoBuild"]
@@ -23,6 +27,11 @@ let package = Package(
 		)
 	],
 	targets: [
+		.target(
+			name: "LocoLib",
+			dependencies: ["loco"],
+			plugins: ["LocoBuild"]
+		),
 		.plugin(
 			name: "LocoBuild",
 			capability: .buildTool(),
