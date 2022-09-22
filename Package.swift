@@ -11,13 +11,13 @@ let package = Package(
 		.watchOS("6.0")
 	],
 	products: [
-		.library(
-			name: "LocoLib",
-			targets: ["LocoLib"]
-		),
 		.plugin(
 			name: "LocoBuild",
 			targets: ["LocoBuild"]
+		),
+		.plugin(
+			name: "LocoCLI",
+			targets: ["LocoCLI"]
 		)
 	],
 	dependencies: [
@@ -27,14 +27,24 @@ let package = Package(
 		)
 	],
 	targets: [
-		.target(
-			name: "LocoLib",
-			dependencies: ["loco"],
-			plugins: ["LocoBuild"]
-		),
 		.plugin(
 			name: "LocoBuild",
 			capability: .buildTool(),
+			dependencies: ["loco"]
+		),
+		.plugin(
+			name: "LocoCLI",
+			capability: .command(
+				intent: .custom(
+					verb: "loco-analyze",
+					description: "Runs loco in your project directory and generates a report into LocoLogs.txt"
+				),
+				permissions: [
+					.writeToPackageDirectory(
+						reason: "Needs to generate LocoLogs.txt to write the output of loco."
+					)
+				]
+			),
 			dependencies: ["loco"]
 		)
 	]

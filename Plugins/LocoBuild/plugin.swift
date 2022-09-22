@@ -18,7 +18,7 @@ struct LocoBuild: BuildToolPlugin {
 
 		return [
 			.buildCommand(
-				displayName: "Analyzing files with loco",
+				displayName: "Analyzing files with loco...",
 				executable: tool.path,
 				arguments: [],
 				inputFiles: paths
@@ -43,7 +43,7 @@ extension LocoBuild: XcodeBuildToolPlugin {
 
 		return [
 			.buildCommand(
-				displayName: "Analyzing files with loco",
+				displayName: "Analyzing files with loco...",
 				executable: tool.path,
 				arguments: [],
 				inputFiles: paths

@@ -40,7 +40,7 @@ struct LocoCLI: CommandPlugin {
 
 		guard let outputData = try? pipe.fileHandleForReading.readToEnd() else { return }
 		guard let output = String(data: outputData, encoding: .utf8) else { return }
-		try output.write(toFile: "Loco.txt", atomically: true, encoding: .utf8)
+		try output.write(toFile: "LocoLogs.txt", atomically: true, encoding: .utf8)
 	}
 
 }
