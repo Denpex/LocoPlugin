@@ -5,7 +5,10 @@ import PackageDescription
 let package = Package(
 	name: "LocoPlugin",
 	platforms: [
-		.macOS(.v11)
+		.macOS("10.15"),
+		.iOS("12.0"),
+		.tvOS("12.0"),
+		.watchOS("6.0")
 	],
 	products: [
 		.plugin(
