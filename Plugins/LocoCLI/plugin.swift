@@ -11,7 +11,7 @@ import Foundation
 import PackagePlugin
 
 @main
-struct LocoPlugin: CommandPlugin {
+struct LocoCLI: CommandPlugin {
 
 	public func performCommand(context: PackagePlugin.PluginContext, arguments: [String]) async throws {
 		// Load loco

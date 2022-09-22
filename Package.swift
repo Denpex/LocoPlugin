@@ -3,18 +3,14 @@
 import PackageDescription
 
 let package = Package(
-	name: "loco-plugin",
+	name: "LocoPlugin",
 	platforms: [
-		.macOS(.v10_15)
+		.macOS(.v11)
 	],
 	products: [
 		.plugin(
-			name: "LocoBuiltin",
-			targets: ["LocoBuiltin"]
-		),
-		.plugin(
-			name: "LocoPlugin",
-			targets: ["LocoPlugin"]
+			name: "LocoBuild",
+			targets: ["LocoBuild"]
 		)
 	],
 	dependencies: [
@@ -25,31 +21,9 @@ let package = Package(
 	],
 	targets: [
 		.plugin(
-			name: "LocoBuiltin",
+			name: "LocoBuild",
 			capability: .buildTool(),
-			dependencies: [
-				.product(name: "loco", package: "Loco")
-			]
-		),
-		.plugin(
-			name: "LocoPlugin",
-			capability: .command(
-				intent: .custom(
-					verb: "loco",
-					description: "Will analyize all your .lproj files and create a report with warnings and errors."
-				),
-				permissions: [
-					.writeToPackageDirectory(
-						reason: "LocoPlugin will analyize all *.lproj inside of your directory."
-					)
-				]
-			),
-			dependencies: [
-				.product(
-					name: "loco",
-					package: "Loco"
-				),
-			]
-		),
+			dependencies: ["loco"]
+		)
 	]
 )
