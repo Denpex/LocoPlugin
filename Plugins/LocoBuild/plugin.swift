@@ -27,3 +27,34 @@ struct LocoBuild: BuildToolPlugin {
 	}
 
 }
+
+#if canImport(XcodeProjectPlugin)
+import XcodeProjectPlugin
+
+extension LocoBuild: XcodeBuildToolPlugin {
+
+	func createBuildCommands(context: XcodeProjectPlugin.XcodePluginContext, target: XcodeProjectPlugin.XcodeTarget) throws -> [PackagePlugin.Command] {
+
+		guard let target = target as? SourceModuleTarget else {
+			fatalError("Wrong target type \(String(describing: target.self))")
+		}
+
+		let tool = try context.tool(named: "loco")
+		let paths = target.sourceFiles(withSuffix: ".lproj").map { $0.path }
+
+		debugPrint(paths)
+
+		return [
+			.buildCommand(
+				displayName: "Analyzing files with loco",
+				executable: tool.path,
+				arguments: [],
+				inputFiles: paths
+			)
+		]
+		
+	}
+
+}
+
+#endif
