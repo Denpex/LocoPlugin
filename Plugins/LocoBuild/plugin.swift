@@ -1,26 +1,23 @@
+import XcodeProjectPlugin
 import PackagePlugin
 import Foundation
 
 @main
-struct LocoBuild: BuildToolPlugin {
+struct LocoBuild: XcodeBuildToolPlugin {
 
-	func createBuildCommands(
-		context: PackagePlugin.PluginContext,
-		target: PackagePlugin.Target
-	) async throws -> [PackagePlugin.Command] {
+	func createBuildCommands(context: XcodeProjectPlugin.XcodePluginContext, target: XcodeProjectPlugin.XcodeTarget) throws -> [PackagePlugin.Command] {
 		print("Hello, World!")
-		guard let target = target as? SwiftSourceModuleTarget else {
-			return []
-		}
 
 		let tool = try context.tool(named: "loco")
+		let translations = target.inputFiles.filter({ $0.type == .resource })
+		let paths = translations.map { $0.path }
 
 		return [
-			.prebuildCommand(
-				displayName: "Running loco",
+			.buildCommand(
+				displayName: "Started loco...",
 				executable: tool.path,
-				arguments: [target.directory.string],
-				outputFilesDirectory: context.pluginWorkDirectory
+				arguments: [],
+				inputFiles: paths
 			)
 		]
 	}
